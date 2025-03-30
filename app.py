@@ -210,7 +210,7 @@ def generate_pdf(data, antes_path, despues_path):
     elements.append(img_table)
     
     try:
-        doc.build(elements)
+    doc.build(elements)
         buffer.seek(0)
         return buffer, f"{nombre_base}.pdf"
     except Exception as e:
@@ -237,29 +237,29 @@ def index():
                 except (ValueError, ZeroDivisionError):
                     participacion.append("0%")
             
-            data = {
-                'pdv': request.form['pdv'],
-                'categoria': request.form['categoria'],
-                'observaciones': request.form['observaciones'],
-                'producto': request.form.getlist('producto[]'),
+        data = {
+            'pdv': request.form['pdv'],
+            'categoria': request.form['categoria'],
+            'observaciones': request.form['observaciones'],
+            'producto': request.form.getlist('producto[]'),
                 'caras_despues': caras_despues,
                 'total_caras': total_caras,
                 'participacion': participacion,
-                'inventario': request.form.getlist('inventario[]')
-            }
-            
-            antes_file = request.files['antes']
-            despues_file = request.files['despues']
-            
+            'inventario': request.form.getlist('inventario[]')
+        }
+        
+        antes_file = request.files['antes']
+        despues_file = request.files['despues']
+        
             if not antes_file or not despues_file:
                 return "Error: Faltan archivos de imagen", 400
             
-            antes_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(antes_file.filename))
-            despues_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(despues_file.filename))
-            
-            antes_file.save(antes_path)
-            despues_file.save(despues_path)
-            
+        antes_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(antes_file.filename))
+        despues_path = os.path.join(app.config['UPLOAD_FOLDER'], secure_filename(despues_file.filename))
+        
+        antes_file.save(antes_path)
+        despues_file.save(despues_path)
+        
             # Determinar el tipo de generación solicitado
             generation_type = request.form.get('type', 'pdf')
             
